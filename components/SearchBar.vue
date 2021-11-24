@@ -90,16 +90,20 @@
       },
 
       fetchData (val, add) {
+        if (this.isLoading) return
         // If there is no search term, reset query params
         if (!val || !val.trim()) {
           this.items=[]
           this.searchContinue=0
           return
         } 
-        // Items have already been requested
+
+        // Set loading state
         this.isLoading = true
 
+        // If searchContinue has been set to undefined, use 0 for the new search
         const cont = this.searchContinue || 0
+  
         // Lazily load input items
         fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&uselang=en&language=en&format=json&origin=*&continue=${cont}&search=${val.trim()}`)
           .then(res => res.json())

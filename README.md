@@ -1,5 +1,7 @@
 # wikidata-search
+A simple search widget designed to mimic the autocomplete feature found at http://wikidata.org
 
+Results are returned in groups of 7, and more can be added by clicking the + button. After making a selection, click "Learn More" to visit the wikidata page.
 ## Build Setup
 
 ```bash

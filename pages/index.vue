@@ -15,6 +15,7 @@
             color="primary"
             :disabled="!value"
             nuxt
+            target="_blank"
             :href="value ? value.url : '#'"
           >
             <v-icon>mdi-wikipedia</v-icon>

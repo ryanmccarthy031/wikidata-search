@@ -51,7 +51,9 @@
           <div
             class="pa-3"
             v-if="(selected || {}).label || search">
-            <a :href="`https://www.wikidata.org/w/index.php?search=${search}&title=Special%3ASearch&fulltext=1&ns0=1&ns120=1`">Search for pages containing <em>{{ truncate((selected || {}).label) || search }}</em></a>
+            <a 
+              target="_blank"
+              :href="`https://www.wikidata.org/w/index.php?search=${search}&title=Special%3ASearch&fulltext=1&ns0=1&ns120=1`">Search for pages containing <em>{{ truncate((selected || {}).label) || search }}</em></a>
           </div>
         </div>
       </template>

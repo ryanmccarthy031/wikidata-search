@@ -32,7 +32,7 @@
         v-slot:append-item>
         <div>
           <div 
-            v-if="items.length && searchContinue!==undefined"
+            v-if="(items || []).length && searchContinue!==undefined"
             class="d-flex flex-row-reverse">
             <v-fab-transition>
               <v-btn
@@ -50,8 +50,8 @@
           </div>
           <div
             class="pa-3"
-            v-if="selected.label || search">
-            <a :href="`https://www.wikidata.org/w/index.php?search=${search}&title=Special%3ASearch&fulltext=1&ns0=1&ns120=1`">Search for pages containing <em>{{ truncate(selected.label) || search }}</em></a>
+            v-if="(selected || {}).label || search">
+            <a :href="`https://www.wikidata.org/w/index.php?search=${search}&title=Special%3ASearch&fulltext=1&ns0=1&ns120=1`">Search for pages containing <em>{{ truncate((selected || {}).label) || search }}</em></a>
           </div>
         </div>
       </template>
@@ -89,16 +89,17 @@
 
       fetchData (val, add) {
         // If there is no search term, reset query params
-        if (!val) {
+        if (!val.trim()) {
           this.items=[]
           this.searchContinue=0
           return
-        }
+        } 
         // Items have already been requested
         this.isLoading = true
 
+        const cont = this.searchContinue || 0
         // Lazily load input items
-        fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&uselang=en&language=en&format=json&origin=*&continue=${this.searchContinue}&search=${val}`)
+        fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&uselang=en&language=en&format=json&origin=*&continue=${cont}&search=${val.trim()}`)
           .then(res => res.json())
           .then(res => {
             // This sets the value for further results. Will return undefined if the list is exhausted

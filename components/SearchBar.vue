@@ -89,7 +89,7 @@
 
       fetchData (val, add) {
         // If there is no search term, reset query params
-        if (!val.trim()) {
+        if (!val || !val.trim()) {
           this.items=[]
           this.searchContinue=0
           return
